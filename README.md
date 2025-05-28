@@ -82,20 +82,6 @@ Clearly state your **target market** in your README and build with their needs i
 
 ---
 
-## 📁 Repo Structure
-
-Once you fork this repo, you may organize your code as you wish. Suggested structure:
-
-\`\`\`bash
-maverick-preassessment/
-├── backend/              # backend code (if any)
-├── frontend/             # frontend code (if any)
-├── docs/                 # API docs, screen recordings, etc
-├── README.md             # updated with your details
-\`\`\`
-
----
-
 ## 📌 Submission Guidelines
 
 1. **Fork this repository** to your personal GitHub account.
