@@ -97,7 +97,7 @@ If you are feeling confident, you can play around with Payd APIs accessible via 
    - Setup/run instructions
    - Your product thinking: what problem you chose, why, and how you solved it
    - (Optional but encouraged) Link to video walkthrough (2-4 mins)
-4. Once you’re done, **create a pull request** to this original repository.
+4. Once you’re done, invite @rocks-xebec to the reposiroty and send an email of the assessment to ravens@payd.money .
 
 ---
 
