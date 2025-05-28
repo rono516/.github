@@ -29,11 +29,12 @@ Build an interactive banking app prototype using mock data. Showcase clean UX, d
 
 - **Tech Options:** `React + Next.js` OR `Vue.js`
 - **Mock Data:** Use `localStorage` or an in-memory store
-- **Features to Include:**
+- **Features that shouldn't miss:**
   - Login/Signup screen (mocked)
   - Wallet overview (balance, transactions)
   - Send/receive money (mocked)
   - Clean UI, clear navigation
+  - Proper state management
 
 ---
 
@@ -43,7 +44,7 @@ Build a REST API for a simplified banking platform and document the API endpoint
 
 - **Tech Options:** `Golang (Gin or Gorilla Mux)` OR `Laravel (PHP)`
 - **Database:** PostgreSQL
-- **Features to Include:**
+- **Features that shouldn't miss:**
   - User registration/login
   - Wallet balance endpoints
   - Transaction endpoints (create, list)
@@ -59,11 +60,10 @@ Build a functional banking app with both frontend and backend components.
 - **Backend:** Golang or Laravel  
 - **Database:** PostgreSQL
 
-- **Features to Include:**
+- **Features that shouldn't miss:**
   - User registration/login
   - Wallet overview and transaction history
   - Send/receive functionality
-  - Real API integration
   - Clean UI and experience
 
 ---
@@ -79,6 +79,8 @@ Choose one **specific user group** and build the banking app around their needs.
 - Community groups/Saccos
 
 Clearly state your **target market** in your README and build with their needs in mind.
+
+If you are feeling confident, you can play around with Payd APIs accessible via https://magic.mypayd.app to improve the functionality of your platform with real-world payments.
 
 ---
 
