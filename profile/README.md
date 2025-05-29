@@ -86,7 +86,7 @@ If you are feeling confident, you can play around with Payd APIs accessible via 
 
 ## 📌 Submission Guidelines
 
-1. **Fork this repository** to your personal GitHub account.
+1. **Create a repository** in your personal GitHub account.
 2. **Build your project** inside your forked repo.
 3. **Update the `README.md`** in your fork to include:
    - Your name
@@ -97,7 +97,7 @@ If you are feeling confident, you can play around with Payd APIs accessible via 
    - Setup/run instructions
    - Your product thinking: what problem you chose, why, and how you solved it
    - (Optional but encouraged) Link to video walkthrough (2-4 mins)
-4. Once you’re done, invite @rocks-xebec to the reposiroty and send an email of the assessment to ravens@payd.money .
+4. Once you’re done, invite @rocks-xebec to the repository and send an email of the assessment to ravens@payd.money .
 
 ---
 
