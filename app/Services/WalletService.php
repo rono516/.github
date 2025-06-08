@@ -1,0 +1,56 @@
+<?php
+
+namespace App\Services;
+
+use App\Models\Wallet;
+use App\Models\Transaction;
+use Illuminate\Support\Facades\DB;
+
+class WalletService
+{
+    public function deposit(Wallet $wallet, float $amount, string $description = null): Transaction
+    {
+        $wallet->increment('balance', $amount);
+
+        return $wallet->transactions()->create([
+            'type' => 'DEPOSIT',
+            'amount' => $amount,
+            'description' => $description,
+        ]);
+    }
+
+    public function withdraw(Wallet $wallet, float $amount, string $description = null): Transaction
+    {
+        if ($wallet->balance < $amount) {
+            throw new \Exception("Insufficient balance");
+        }
+
+        $wallet->decrement('balance', $amount);
+
+        return $wallet->transactions()->create([
+            'type' => 'WITHDRAWAL',
+            'amount' => $amount,
+            'description' => $description,
+        ]);
+    }
+
+    public function transfer(Wallet $from, Wallet $to, float $amount, string $description = null): Transaction
+    {
+        if ($from->balance < $amount) {
+            throw new \Exception("Insufficient balance");
+        }
+
+        return DB::transaction(function () use ($from, $to, $amount, $description) {
+            $from->decrement('balance', $amount);
+            $to->increment('balance', $amount);
+
+            return Transaction::create([
+                'wallet_id' => $from->id,
+                'type' => 'TRANSFER',
+                'amount' => $amount,
+                'target_wallet_id' => $to->id,
+                'description' => $description,
+            ]);
+        });
+    }
+}
