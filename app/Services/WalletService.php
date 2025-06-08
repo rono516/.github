@@ -5,10 +5,11 @@ namespace App\Services;
 use App\Models\Wallet;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\DB;
+use App\Notifications\MoneyReceivedNotification;
 
 class WalletService
 {
-    public function deposit(Wallet $wallet, float $amount, string $description = null): Transaction
+    public function deposit(Wallet $wallet, float $amount, string $description): Transaction
     {
         $wallet->increment('balance', $amount);
 
@@ -19,7 +20,7 @@ class WalletService
         ]);
     }
 
-    public function withdraw(Wallet $wallet, float $amount, string $description = null): Transaction
+    public function withdraw(Wallet $wallet, float $amount, string $description): Transaction
     {
         if ($wallet->balance < $amount) {
             throw new \Exception("Insufficient balance");
@@ -34,8 +35,9 @@ class WalletService
         ]);
     }
 
-    public function transfer(Wallet $from, Wallet $to, float $amount, string $description = null): Transaction
+    public function transfer(Wallet $from, Wallet $to, float $amount, string $description): Transaction
     {
+        // dd($to->user->id);
         if ($from->balance < $amount) {
             throw new \Exception("Insufficient balance");
         }
@@ -44,6 +46,9 @@ class WalletService
             $from->decrement('balance', $amount);
             $to->increment('balance', $amount);
 
+            $receiverUser = $to->user;
+            $receiverUser->notify(new MoneyReceivedNotification($amount, $from->name));
+
             return Transaction::create([
                 'wallet_id' => $from->id,
                 'type' => 'TRANSFER',
@@ -51,6 +56,7 @@ class WalletService
                 'target_wallet_id' => $to->id,
                 'description' => $description,
             ]);
+
         });
     }
 }

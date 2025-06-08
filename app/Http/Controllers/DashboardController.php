@@ -34,12 +34,32 @@ class DashboardController extends Controller
             ->latest()
             ->paginate(10);
 
+        $notifications = $user?->unreadNotifications()->count() ?? 0;
+
         return Inertia::render('dashboard', [
             'user'             => $user->load('wallet'),
             'totalDeposits'    => $totalDeposits,
             'totalReceived'    => $totalReceived,
             'transactions'     => $transactions,
             'totalTransferred' => $totalTransferred,
+            'notifications'    => $notifications,
         ]);
+    }
+
+    public function notifications()
+    {
+
+        $user = auth()->user();
+        return Inertia::render('notifications/notifications', [
+            'notifications' => $user->notifications,       // all notifications
+            'unread'        => $user->unreadNotifications, // unread only
+        ]);
+    }
+
+    public function markNotificationRead($id)
+    {
+        $notification = auth()->user()->notifications()->findOrFail($id);
+        $notification->markAsRead();
+        return back()->with('success', 'Notification marked as read.');
     }
 }

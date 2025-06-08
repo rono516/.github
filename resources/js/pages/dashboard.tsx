@@ -16,6 +16,7 @@ interface Props {
         success?: string;
         error?: string;
     };
+    notifications: number,
     totalDeposits: number;
     totalReceived: number;
     totalTransferred: number;
@@ -111,48 +112,52 @@ export default function Dashboard({ user, flash, totalDeposits, totalReceived, t
                 <div className="px-4 py-3">
                     <HeadingSmall title="Recent Transactions" />
                 </div>
-                <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                    <div className="overflow-x-auto">
-                        <table className="min-w-full table-auto border">
-                            <thead>
-                                <tr className="bg-gray-100 text-left">
-                                    <th className="px-4 py-2">Type</th>
-                                    <th className="px-4 py-2">Amount</th>
-                                    <th className="px-4 py-2">From</th>
-                                    <th className="px-4 py-2">To</th>
-                                    <th className="px-4 py-2">Description</th>
-                                    <th className="px-4 py-2">Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {transactions.data.map((tx) => (
-                                    <tr key={tx.id} className="border-t">
-                                        <td className="px-4 py-2">{tx.type}</td>
-                                        <td className="px-4 py-2">KES {tx.amount}</td>
-                                        <td className="px-4 py-2">{tx.wallet?.name || '-'}</td>
-                                        <td className="px-4 py-2">{tx.target_wallet?.name || '-'}</td>
-                                        <td className="px-4 py-2">{tx.description}</td>
-                                        <td className="px-4 py-2">{new Date(tx.created_at).toLocaleString()}</td>
+                {transactions.data.length > 0 ? (
+                    <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
+                        <div className="overflow-x-auto">
+                            <table className="min-w-full table-auto border">
+                                <thead>
+                                    <tr className="bg-gray-100 text-left">
+                                        <th className="px-4 py-2">Type</th>
+                                        <th className="px-4 py-2">Amount</th>
+                                        <th className="px-4 py-2">From</th>
+                                        <th className="px-4 py-2">To</th>
+                                        <th className="px-4 py-2">Description</th>
+                                        <th className="px-4 py-2">Date</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    {transactions.data.map((tx) => (
+                                        <tr key={tx.id} className="border-t">
+                                            <td className="px-4 py-2">{tx.type}</td>
+                                            <td className="px-4 py-2">KES {tx.amount}</td>
+                                            <td className="px-4 py-2">{tx.wallet?.name || '-'}</td>
+                                            <td className="px-4 py-2">{tx.target_wallet?.name || '-'}</td>
+                                            <td className="px-4 py-2">{tx.description}</td>
+                                            <td className="px-4 py-2">{new Date(tx.created_at).toLocaleString()}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div className="mt-4 flex flex-wrap gap-2 px-3">
+                            {transactions.links.map((link, index) =>
+                                link.url ? (
+                                    <a
+                                        key={index}
+                                        href={link.url}
+                                        className={`rounded border px-3 py-1 text-sm ${link.active ? 'bg-blue-600 text-white' : 'bg-white text-gray-800'}`}
+                                        dangerouslySetInnerHTML={{ __html: link.label }}
+                                    />
+                                ) : (
+                                    <span key={index} className="px-3 py-1 text-sm text-gray-400" dangerouslySetInnerHTML={{ __html: link.label }} />
+                                ),
+                            )}
+                        </div>
                     </div>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                        {transactions.links.map((link, index) =>
-                            link.url ? (
-                                <a
-                                    key={index}
-                                    href={link.url}
-                                    className={`rounded border px-3 py-1 text-sm ${link.active ? 'bg-blue-600 text-white' : 'bg-white text-gray-800'}`}
-                                    dangerouslySetInnerHTML={{ __html: link.label }}
-                                />
-                            ) : (
-                                <span key={index} className="px-3 py-1 text-sm text-gray-400" dangerouslySetInnerHTML={{ __html: link.label }} />
-                            ),
-                        )}
-                    </div>
-                </div>
+                ) : (
+                    <h2 className="text-center">Your transaction history will show here</h2>
+                )}
             </div>
         </AppLayout>
     );

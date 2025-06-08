@@ -14,6 +14,9 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('notifications', [DashboardController::class, 'notifications'])->name('notifications');
+    Route::post('/notifications/{id}/read', [DashboardController::class, 'markNotificationRead']
+    )->name('notifications.read');
 });
 
 require __DIR__ . '/settings.php';

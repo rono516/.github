@@ -1,12 +1,13 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\Transaction;
-use App\Models\Wallet;
-use App\Services\WalletService;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Wallet;
+use App\Models\Transaction;
+use Illuminate\Http\Request;
+use App\Services\WalletService;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
@@ -15,7 +16,11 @@ class TransactionController extends Controller
      */
     public function index(Request $request)
     {
-        return Inertia::render('transactions/transact');
+        $user   = Auth::user();
+        $notifications = $user?->unreadNotifications()->count() ?? 0;
+        return Inertia::render('transactions/transact', [
+            'notifications' => $notifications
+        ]);
     }
 
     /**

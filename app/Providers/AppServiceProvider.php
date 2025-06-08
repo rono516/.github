@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
@@ -12,21 +11,21 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // use Inertia\Inertia;
     }
 
     /**
      * Bootstrap any application services.
      */
+    //
     public function boot(): void
     {
         Inertia::share([
-        'flash' => function () {
-            return [
+            'flash' => fn() => [
                 'success' => session('success'),
-                'error' => session('error'),
-            ];
-        },
-    ]);
+                'error'   => session('error'),
+            ],
+        ]);
     }
+
 }
