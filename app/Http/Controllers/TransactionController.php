@@ -34,7 +34,8 @@ class TransactionController extends Controller
         ]);
         $wallet = auth()->user()->wallet;
         $walletService->deposit($wallet, $validated['amount'], 'User deposit');
-        return redirect()->route('dashboard')->with('success', 'Deposit successful');
+        // return redirect()->route('dashboard')->with('success', 'Deposit successful');
+        return back()->with('success', 'Deposit successful');
     }
     /**
      * Transfer from one wallet to another

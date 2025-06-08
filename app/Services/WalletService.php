@@ -4,14 +4,18 @@ namespace App\Services;
 
 use App\Models\Wallet;
 use App\Models\Transaction;
+use App\Notifications\DepositNotification;
 use Illuminate\Support\Facades\DB;
 use App\Notifications\MoneyReceivedNotification;
+
 
 class WalletService
 {
     public function deposit(Wallet $wallet, float $amount, string $description): Transaction
     {
         $wallet->increment('balance', $amount);
+        $depositingUser = $wallet->user;
+        $depositingUser->notify(new DepositNotification($amount,$wallet->balance));
 
         return $wallet->transactions()->create([
             'type' => 'DEPOSIT',

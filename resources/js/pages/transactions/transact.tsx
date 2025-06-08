@@ -36,7 +36,11 @@ export default function Transact({ mustVerifyEmail, status }: { mustVerifyEmail:
         e.preventDefault();
 
         post(route('transact.deposit'), {
-            preserveScroll: true,
+            onSuccess: () => {
+                setTimeout(() => {
+                    window.location.reload(); // Full browser refresh after 2 seconds
+                }, 2000);
+            },
         });
     };
 

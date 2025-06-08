@@ -62,7 +62,9 @@ export default function Notifications({ user, flash, notifications }: Props) {
     const markAsRead = (id: string) => {
         post(route('notifications.read', id), {
             onSuccess: () => {
-                window.location.reload(); // Full browser refresh
+                setTimeout(() => {
+                    window.location.reload(); // Full browser refresh after 2 seconds
+                }, 2000);
             },
         });
     };
