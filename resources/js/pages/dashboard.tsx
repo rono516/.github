@@ -129,7 +129,7 @@ export default function Dashboard({ user, flash, totalDeposits, totalReceived, t
                                 <tbody>
                                     {transactions.data.map((tx) => (
                                         <tr key={tx.id} className="border-t">
-                                            <td className="px-4 py-2">{tx.type}</td>
+                                            <td className="px-4 py-2">{tx.type == "TRANSFER" && tx.target_wallet?.name == user.wallet.name ? "RECEIVED": tx.type}</td>
                                             <td className="px-4 py-2">KES {tx.amount}</td>
                                             <td className="px-4 py-2">{tx.wallet?.name || '-'}</td>
                                             <td className="px-4 py-2">{tx.target_wallet?.name || '-'}</td>

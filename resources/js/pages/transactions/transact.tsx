@@ -39,7 +39,7 @@ export default function Transact({ mustVerifyEmail, status }: { mustVerifyEmail:
             onSuccess: () => {
                 setTimeout(() => {
                     window.location.reload(); // Full browser refresh after 2 seconds
-                }, 2000);
+                }, 1000);
             },
         });
     };
