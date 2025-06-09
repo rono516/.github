@@ -1,6 +1,6 @@
 import { type BreadcrumbItem, type SharedData } from '@/types';
 import { Transition } from '@headlessui/react';
-import { Head, useForm, usePage } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { FormEventHandler, useState } from 'react';
 // import HeadingSmall from '@/components/heading-small';
 import InputError from '@/components/input-error';
@@ -8,9 +8,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/app-layout';
-function HeadingSmall({ title, description, onClick }: { title: string; description?: string, onClick?: () => void }) {
+import { Plus } from 'lucide-react';
+function HeadingSmall({ title, description, onClick }: { title: string; description?: string; onClick?: () => void }) {
     return (
-        <header className='' onClick={onClick}>
+        <header className="" onClick={onClick}>
             <h3 className="mb-0.5 text-base font-medium">{title}</h3>
             {description && <p className="text-sm text-muted-foreground">{description}</p>}
         </header>
@@ -24,10 +25,11 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 interface Props {
-    savings: Saving[]
+    savings: Saving[];
 }
 
 interface Saving {
+    id: number;
     name: string;
     description: string;
     balance: number;
@@ -35,9 +37,9 @@ interface Saving {
 }
 
 type SavingsForm = {
-    name: string,
-    description: string,
-    target: string,
+    name: string;
+    description: string;
+    target: string;
 };
 type TransferForm = {
     amount: string;
@@ -51,7 +53,6 @@ export default function Savings({ savings }: Props) {
         name: '',
         description: '',
         target: '',
-
     });
 
     const submitDeposit: FormEventHandler = (e) => {
@@ -59,7 +60,7 @@ export default function Savings({ savings }: Props) {
 
         post(route('savings.store'), {
             onSuccess: () => {
-                setTimeout(() => {  
+                setTimeout(() => {
                     window.location.reload(); // Full browser refresh after 2 seconds
                 }, 1000);
             },
@@ -83,7 +84,13 @@ export default function Savings({ savings }: Props) {
             <Head title="Payd Sacco Savings" />
 
             <div className="px-4 py-6">
-                <HeadingSmall onClick={() => setShowForm((prev) => !prev)} title="Savings Accounts" />
+                {/* <HeadingSmall onClick={() => setShowForm((prev) => !prev)} title="Savings Accounts" /> */}
+                <div className="flex place-content-between">
+                    <HeadingSmall title="Savings Accounts" />
+                    <button onClick={() => setShowForm((prev) => !prev)}>
+                        <Plus />
+                    </button>
+                </div>
 
                 {showForm && (
                     <div className="py-6">
@@ -161,20 +168,34 @@ export default function Savings({ savings }: Props) {
                         <p>No savings found.</p>
                     ) : (
                         savings?.map((sx) => (
-                            <div
-                                key={`${sx.name}-${sx.balance}-${sx.target}`}
-                                className="relative flex aspect-video flex-col items-center justify-center overflow-hidden rounded-xl border border-sidebar-border/70 text-center dark:border-sidebar-border"
-                            >
-                                <p>
-                                    <strong>{sx.name} Savings</strong>
-                                </p>
-                                <p>
-                                    <strong>Balance:</strong> KES {sx.balance}
-                                </p>
-                                <p>
-                                    <strong>Target:</strong> KES {sx.target}
-                                </p>
-                            </div>
+                            <Link key={sx.id} href={route('savings.deposit', sx.id)}>
+                                <div
+                                    key={`${sx.name}-${sx.balance}-${sx.id}`}
+                                    className="relative flex aspect-video flex-col items-center justify-center overflow-hidden rounded-xl border border-sidebar-border/70 p-4 text-center dark:border-sidebar-border"
+                                >
+                                    <p className="text-lg font-semibold">{sx.name} </p>
+                                    <p>
+                                        <strong>Balance:</strong> KES {sx.balance}
+                                    </p>
+                                    <p>
+                                        <strong>Target:</strong> KES {sx.target}
+                                    </p>
+
+                                    <div className="mt-4 w-full">
+                                        <div className="mb-1 text-sm text-neutral-700 dark:text-neutral-300">
+                                            Progress: {Math.min(100, Math.round((sx.balance / sx.target) * 100))}%
+                                        </div>
+                                        <div className="h-3 w-full rounded-full bg-neutral-200 dark:bg-neutral-700">
+                                            <div
+                                                className="h-3 rounded-full bg-green-500 transition-all duration-500"
+                                                style={{
+                                                    width: `${Math.min(100, (sx.balance / sx.target) * 100)}%`,
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </Link>
                         ))
                     )}
                 </div>
