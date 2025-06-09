@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Saving;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -24,6 +25,8 @@ class DashboardController extends Controller
         $totalTransferred = Transaction::where('wallet_id', $wallet->id)
             ->where('type', 'TRANSFER')
             ->sum('amount');
+        $totalSavings = Saving::where('user_id', $user->id)
+            ->sum('balance');
 
         // Fetch recent transactions paginated
         $transactions = Transaction::with(['wallet.user', 'targetWallet.user'])
@@ -43,6 +46,7 @@ class DashboardController extends Controller
             'transactions'     => $transactions,
             'totalTransferred' => $totalTransferred,
             'notifications'    => $notifications,
+            'totalSavings'     => $totalSavings,
         ]);
     }
 

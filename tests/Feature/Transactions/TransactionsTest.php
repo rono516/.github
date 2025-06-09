@@ -1,20 +1,18 @@
 <?php
 namespace Tests\Feature;
 
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class DashboardTest extends TestCase
+class TransactionsTest extends TestCase
 {
     use RefreshDatabase;
-
     public function test_guests_are_redirected_to_the_login_page()
     {
-        $this->get('/dashboard')->assertRedirect('/login');
+        $this->get('/transact')->assertRedirect('/login');
     }
 
-    public function test_authenticated_users_can_visit_the_dashboard()
+    public function test_authenticated_users_can_visit_the_transactions_page()
     {
         $response = $this->post('/register', [
             'name'                  => 'Test User',
@@ -24,6 +22,7 @@ class DashboardTest extends TestCase
             'password_confirmation' => 'password',
         ]);
         $user = auth()->user();
-        $this->get('/dashboard')->assertOk();
+        $this->get('/transact')->assertOk();
+
     }
 }

@@ -20,6 +20,7 @@ interface Props {
     totalDeposits: number;
     totalReceived: number;
     totalTransferred: number;
+    totalSavings: number;
     transactions: {
         data: Transaction[];
         current_page: number;
@@ -55,7 +56,7 @@ interface Props {
     user: User;
 }
 
-export default function Dashboard({ user, flash, totalDeposits, totalReceived, totalTransferred, transactions }: Props) {
+export default function Dashboard({ user, flash, totalDeposits, totalReceived, totalSavings,totalTransferred, transactions }: Props) {
     const [showFlash, setShowFlash] = useState(!!flash?.success);
     useEffect(() => {
         if (flash?.success) {
@@ -112,7 +113,7 @@ export default function Dashboard({ user, flash, totalDeposits, totalReceived, t
                         <h2 className="text-lg font-semibold">Savings</h2>
 
                         <p>
-                            <strong>Total:</strong> KES {totalTransferred}
+                            <strong>Total:</strong> KES {totalSavings}
                         </p>
                     </div>
                 </div>
