@@ -77,7 +77,7 @@ export default function Dashboard({ user, flash, totalDeposits, totalReceived, t
                 </div>
             )}
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <div className="grid auto-rows-min gap-4 md:grid-cols-4">
+                <div className="grid auto-rows-min gap-4 md:grid-cols-5">
                     <div className="relative flex aspect-video flex-col items-center justify-center overflow-hidden rounded-xl border border-sidebar-border/70 text-center dark:border-sidebar-border">
                         <h2 className="text-lg font-semibold">Wallet</h2>
                         <p>
@@ -103,6 +103,13 @@ export default function Dashboard({ user, flash, totalDeposits, totalReceived, t
                     </div>
                     <div className="relative flex aspect-video flex-col items-center justify-center overflow-hidden rounded-xl border border-sidebar-border/70 text-center dark:border-sidebar-border">
                         <h2 className="text-lg font-semibold">Sent</h2>
+
+                        <p>
+                            <strong>Total:</strong> KES {totalTransferred}
+                        </p>
+                    </div>
+                    <div className="relative flex aspect-video flex-col items-center justify-center overflow-hidden rounded-xl border border-sidebar-border/70 text-center dark:border-sidebar-border">
+                        <h2 className="text-lg font-semibold">Savings</h2>
 
                         <p>
                             <strong>Total:</strong> KES {totalTransferred}

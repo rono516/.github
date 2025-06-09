@@ -3,7 +3,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { ArrowLeftRight, LayoutGrid, MessageSquareDot } from 'lucide-react';
+import { ArrowLeftRight, LayoutGrid, MessageSquareDot, Landmark } from 'lucide-react';
 import AppLogo from './app-logo';
 
 export function AppSidebar() {
@@ -19,6 +19,11 @@ export function AppSidebar() {
             title: 'Transact',
             href: '/transact',
             icon: ArrowLeftRight,
+        },
+        {
+            title: 'Savings',
+            href: '/savings',
+            icon: Landmark,
         },
         {
             title: 'Notifications',
