@@ -77,8 +77,8 @@ export default function Notifications({ user, flash, notifications }: Props) {
                     <p className="text-gray-600">You have no notifications.</p>
                 ) : (
                     notifications.map((notif) => (
-                        <div key={notif.id} className={`rounded border p-4 shadow ${notif.read_at ? 'bg-white' : 'bg-blue-50'}`}>
-                            <p>{notif.data.message}</p>
+                        <div key={notif.id} className={`rounded ${notif.read_at ? '' : 'shadow'} border p-4`}>
+                            <h1>{notif.data.message}</h1>
                             <small className="text-gray-500">{new Date(notif.created_at).toLocaleString()}</small>
                             {!notif.read_at && (
                                 <form
